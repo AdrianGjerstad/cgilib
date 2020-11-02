@@ -2,7 +2,7 @@
 
 The following is a list of thing I have yet to implement
 
-- Publish to GitHub
+- ~~Publish to GitHub~~
 - Send static files
 - Generate dictionary of available request body data
   - i.e. turn `foo=bar&baz` into `{{"foo", "bar"},{"baz", "1"}}`
