@@ -16,7 +16,12 @@ can.
 
 ## Reporting a Vulnerability
 
-This is still under review, as I need to learn how to do it myself. If you
-manage to have a crisis with the current state of this project...
+We make every effort we can to stop vulnerabilites before they're
+prematurely disclosed to the public. To do that, we need people who can
+look out for such threats, and report them.
 
-*how?*
+If you find a threat that you believe to still be in a current release,
+please send an email to cppcgilibsecurity@googlegroups.com. In your email
+please provide a description of the type of attack it reveals, and what
+you may recommend to fix it. Every recommendation helps, so, if you want
+search through our code and find every little thing you can!
