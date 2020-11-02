@@ -40,6 +40,9 @@ See more examples in the `/examples` directory.
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
+If an issue is already open, and you would like to tackle it, mention that you would like to, and we can collaborate
+from there.
+
 Please make sure to test your additions, and, if you come up with a new test, put it in the `/test` directory.
 
 ## License
