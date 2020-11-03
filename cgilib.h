@@ -11,6 +11,7 @@
 #include <utility>
 #include <algorithm>
 #include <sstream>
+#include <fstream>
 
 // Get access to a list of every environment variable
 // (Useful for listing request headers)
@@ -338,6 +339,30 @@ private:
 };
 
 __request_headers__ request_headers;
+
+void send_static(std::string filename) {
+  std::string content;
+  
+  std::fstream file;
+  file.open(filename, std::fstream::in);
+  
+  if(!file.is_open()) {
+    // Failure to open the file
+    std::cout << "Status: 500" << std::endl;
+    std::cout << "Content-Type: text/plain" << std::endl << std::endl;
+
+    std::cout << "500 Internal Server Error" << std::endl << std::endl;
+    std::cout << "Could not open file: file not available for reading" << std::endl;
+    return;
+  }
+  
+  content.assign((std::istreambuf_iterator<char>(file)), (std::istreambuf_iterator<char>()));
+
+  file.close();
+
+  std::cout << headers.export_headers();
+  std::cout << content << std::endl;
+}
 
 }  // namespace cgi
 
