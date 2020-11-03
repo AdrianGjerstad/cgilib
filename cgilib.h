@@ -185,16 +185,16 @@ class __headers__ {
 public:
   __headers__() {}
   
-  int add_header(std::string name, std::string value) {
+  int add(std::string name, std::string value) {
     headers.push_back(std::make_pair(name, value));
     return headers.size()-1;
   }
   
-  void delete_header(int idx) {
+  void remove(int idx) {
     headers.erase(headers.begin()+idx);
   }
 
-  std::string export_headers() {
+  std::string format() {
     std::string res;
     for(int i = 0; i < headers.size(); ++i) {
       res += headers[i].first + ": " + headers[i].second + "\n";
@@ -211,10 +211,10 @@ __headers__ headers;
 int __status_code_idx__ = -1;
 void set_status_code(int status_code) {
   if(__status_code_idx__ != -1) {
-    headers.delete_header(__status_code_idx__);
+    headers.remove(__status_code_idx__);
   }
 
-  __status_code_idx__ = headers.add_header("Status", std::to_string(status_code));
+  __status_code_idx__ = headers.add("Status", std::to_string(status_code));
 }
 
 // When writing scripts, output to this stringstream to send content
@@ -225,7 +225,7 @@ void set_status_code(int status_code) {
 std::ostringstream out;
 
 void send_response() {
-  std::cout << headers.export_headers();
+  std::cout << headers.format();
   std::cout << out.str() << std::endl;
 }
 
@@ -360,7 +360,7 @@ void send_static(std::string filename) {
 
   file.close();
 
-  std::cout << headers.export_headers();
+  std::cout << headers.format();
   std::cout << content << std::endl;
 }
 
