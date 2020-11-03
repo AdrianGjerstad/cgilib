@@ -346,6 +346,16 @@ void send_static(std::string filename) {
   std::fstream file;
   file.open(filename, std::fstream::in);
   
+  if(!file.is_open()) {
+    // Failure to open the file
+    std::cout << "Status: 500" << std::endl;
+    std::cout << "Content-Type: text/plain" << std::endl << std::endl;
+
+    std::cout << "500 Internal Server Error" << std::endl << std::endl;
+    std::cout << "Could not open file: file not available for reading" << std::endl;
+    return;
+  }
+  
   content.assign((std::istreambuf_iterator<char>(file)), (std::istreambuf_iterator<char>()));
 
   file.close();
