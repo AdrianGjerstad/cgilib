@@ -11,6 +11,7 @@
 #include <utility>
 #include <algorithm>
 #include <sstream>
+#include <fstream>
 
 // Get access to a list of every environment variable
 // (Useful for listing request headers)
@@ -338,6 +339,20 @@ private:
 };
 
 __request_headers__ request_headers;
+
+void send_static(std::string filename) {
+  std::string content;
+  
+  std::fstream file;
+  file.open(filename, std::fstream::in);
+  
+  content.assign((std::istreambuf_iterator<char>(file)), (std::istreambuf_iterator<char>()));
+
+  file.close();
+
+  out << content;
+  send_response();
+}
 
 }  // namespace cgi
 
