@@ -350,8 +350,8 @@ void send_static(std::string filename) {
 
   file.close();
 
-  out << content;
-  send_response();
+  std::cout << headers.export_headers();
+  std::cout << content << std::endl;
 }
 
 }  // namespace cgi
