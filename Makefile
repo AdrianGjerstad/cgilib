@@ -8,3 +8,5 @@ test: ./test/*
 		$(CXX) prog -I.
 	done
 
+.PHONY: test
+
