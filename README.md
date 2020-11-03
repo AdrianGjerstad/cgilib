@@ -1,5 +1,6 @@
 # cgilib
 
+![travis-build](https://img.shields.io/travis/com/AdrianGjerstad/cgilib?logo=travis&style=flat-square)
 ![license-badge](https://img.shields.io/github/license/AdrianGjerstad/cgilib?style=flat-square&logo=github)
 ![platform-linux](https://img.shields.io/badge/platform-linux-blue?style=flat-square&logo=linux)
 ![std-c++17](https://img.shields.io/badge/std-c++17-blue?style=flat-square&logo=c%2b%2b)
