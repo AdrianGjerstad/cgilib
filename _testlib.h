@@ -5,6 +5,10 @@
 #include <cstdlib>
 #include <sstream>
 #include <iostream>
+#include <vector>
+#include <utility>
+
+#include <time>  // In conjunction with <cstdlib>, we have pseudo-random numbers
 
 extern char* environ;
 
@@ -52,6 +56,77 @@ public:
 };
 
 __startup__ __do_some_startup_code___;
+
+// Create a class that inherits from this class to write a test.
+class unit_test {
+public:
+  unit_test() {
+    srand(time(NULL));  // Seed number gen
+  }
+private:
+  std::vector<std::pair<std::string, std::vector<std::string>>> headers;
+
+  void create_header(std::string name, std::string field) {
+    int entry_index = -1;
+
+    for(int i = 0; i < headers.size(); ++i) {
+      if(headers[i].first == name) {
+        entry_index = i;
+        break;
+      }
+    }
+
+    if(entry_index == -1) {
+      headers.push_back(std::make_pair(name, {}));
+      entry_index = headers.size()-1;
+    }
+
+    headers[entry_index].second.push_back(field);
+  }
+
+  std::string read_header(std::string name) {
+    int entry_index = -1;
+
+    for(int i = 0; i < headers.size(); ++i) {
+      if(headers[i].first == name) {
+        entry_index = i;
+        break;
+      }
+    }
+
+    if(entry_index == -1) {
+      return "";
+    }
+    
+    std::string result;
+    std::string sep = ", ";
+    
+    // To reduce the use of memory reallocation, we'll determine result size beforehand
+    int alloc_size = headers[entry_index].second.size()*2 - 2;
+    for(int i = 0; i < headers[entry_index].second.size(); ++i) {
+      alloc_size += headers[entry_index].second[i].size();
+    }
+
+    result.reserve(alloc_size);
+    
+    for(int i = 0; i < headers[entry_index].second.size(); ++i) {
+      if(name == "Cookie") {  // Cookie has a semicolon (;) separator, not comma (,).
+        // Still good practice to test both ways, since it could be given either way.
+        if(rand() > RAND_MAX/2) {
+          sep = "; ";
+        }
+      }
+
+      if(i != 0) {
+        result += sep;
+      }
+
+      result += headers[entry_index].second[i];
+    }
+
+    return result;
+  }
+};
 
 } // namespace test
 } // namespace cgi
