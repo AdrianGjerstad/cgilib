@@ -8,5 +8,6 @@ LIBHEADER=./cgilib.h
 test: ./test/*
 	for prog in $^; do\
 		$(CXX) $$prog;\
+		./a.out;\
 	done
 
