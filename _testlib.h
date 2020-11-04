@@ -19,39 +19,11 @@ class __startup__ {
 public:
   __startup__() {
     // SEE #15 TO UNDERSTAND THIS
-    // Step 1: Clear environment
     for(char** env = environ; *env; ++env) {
       std::string varline = *env;
       std::string varname = varline.substr(0, varline.find('='));
       unsetenv(varname.c_str());
     }
-
-    // Step 2: Initialize STDIN
-    std::istringstream initial("");
-    std::cin.rdbuf(initial.rdbuf());
-
-    // Step 3: Initialize all meta-variables [rfc3875]
-    setenv("AUTH_TYPE",          "",               1);  // Default environment has no authorization
-    setenv("CONTENT_LENGTH",     "",               1);  // Default environment has no request body
-    setenv("CONTENT_TYPE",       "",               1);  // Default environment has no request body
-    setenv("GATEWAY_INTERFACE",  "CGI/1.1",        1);  // Default environment emulates CGI version 1.1
-    setenv("PATH_INFO",          "",               1);  // Default environment has no crazy URI stuff
-    setenv("PATH_TRANSLATED",    "",               1);  // Default environment has no crazy URI stuff
-    setenv("QUERY_STRING",       "foo=bar",        1);  // Default environment is a GET request
-    setenv("REMOTE_ADDR",        "192.168.1.2",    1);  // Default environment has no useful IP examples
-    setenv("REMOTE_HOST",        "",               1);  // Default environment is localhost
-    setenv("REQUEST_METHOD",     "GET",            1);  // Default environment is a GET request
-    setenv("SCRIPT_NAME",        "",               1);  // Default environment has no crazy URI stuff
-    setenv("SERVER_NAME",        "127.0.0.1",      1);  // Default environment is localhost
-    setenv("SERVER_PORT",        "8080",           1);  // Default environment runs on port 8080
-    setenv("SERVER_PROTOCOL",    "HTTP/1.1",       1);  // Default environment uses HTTP version 1.1
-    setenv("SERVER_SOFTWARE",    "SimpleHTTP/0.6", 1);  // Default environment uses SimpleHTTP version 0.6
-    
-    // Step 4: Model HTTP headers
-    setenv("HTTP_HOST",          "localhost",      1);
-    setenv("HTTP_USER_AGENT",    "Hello, world!",  1);
-    setenv("HTTP_CACHE_CONTROL", "max-age=0",      1);
-    setenv("HTTP_ACCEPT",        "*/*",            1);
   }
 };
 
