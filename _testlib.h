@@ -8,7 +8,7 @@
 #include <vector>
 #include <utility>
 
-#include <time>  // In conjunction with <cstdlib>, we have pseudo-random numbers
+#include <ctime>  // In conjunction with <cstdlib>, we have pseudo-random numbers
 
 extern char* environ;
 
