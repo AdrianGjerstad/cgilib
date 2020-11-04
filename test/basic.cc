@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "cgilib.h"
+#include "../cgilib.h"
 
 int main(int argc, char** argv) {
   cgi::headers.add("Content-Type", "text/plain");

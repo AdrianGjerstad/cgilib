@@ -1,6 +1,8 @@
 language: cpp
 compiler: g++
+os: linux
+dist: debian
 
 script:
-- make test
+- make
 
