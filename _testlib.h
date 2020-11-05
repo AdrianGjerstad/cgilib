@@ -35,7 +35,7 @@ public:
         }
       }
 
-      setenv((std::string("HTTP_") + name).c_str, read_header(headers[i].first).c_str(), 1);
+      setenv((std::string("HTTP_") + name).c_str(), read_header(headers[i].first).c_str(), 1);
     }
   }
 
