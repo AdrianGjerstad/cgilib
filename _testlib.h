@@ -23,7 +23,7 @@ public:
     clear_environment();  // Start with a fresh slate
   }
 
-  build_environment() {
+  void build_environment() {
     // Build headers
     for(int i = 0; i < headers.size(); ++i) {
       std::string name = headers[i].first;
@@ -31,15 +31,15 @@ public:
         if(name[j] == '-') {
           name[j] == '_';
         } else {
-          name[j] = ::cgi::__asciitoupper__(name[j]);
+          name[j] = ::cgi::__string_asciitoupper__(name[j]);
         }
       }
 
-      setenv((std::string("HTTP_") + name).c_str, read_header(headers[i].first), 1);
+      setenv((std::string("HTTP_") + name).c_str, read_header(headers[i].first).c_str(), 1);
     }
   }
 
-  virtual int run() = 1;  // Override this and return 0 to identify that things worked
+  virtual int run() = 0;  // Return a nonzero code to identify success
 private:
   std::vector<std::pair<std::string, std::vector<std::string>>> headers;
 
