@@ -15,9 +15,35 @@ extern char** environ;
 namespace cgi {
 namespace test {
 
-class __startup__ {
+// Create a class that inherits from this class to write a test.
+class unit_test {
 public:
-  __startup__() {
+  unit_test() {
+    srand(time(NULL));  // Seed number gen
+    clear_environment();  // Start with a fresh slate
+  }
+
+  build_environment() {
+    // Build headers
+    for(int i = 0; i < headers.size(); ++i) {
+      std::string name = headers[i].first;
+      for(int j = 0; j < name.size(); ++j) {
+        if(name[j] == '-') {
+          name[j] == '_';
+        } else {
+          name[j] = ::cgi::__asciitoupper__(name[j]);
+        }
+      }
+
+      setenv((std::string("HTTP_") + name).c_str, read_header(headers[i].first), 1);
+    }
+  }
+
+  virtual int run() = 1;  // Override this and return 0 to identify that things worked
+private:
+  std::vector<std::pair<std::string, std::vector<std::string>>> headers;
+
+  void clear_environment() {
     // SEE #15 TO UNDERSTAND THIS
     for(char** env = environ; *env; ++env) {
       std::string varline = *env;
@@ -25,18 +51,11 @@ public:
       unsetenv(varname.c_str());
     }
   }
-};
 
-__startup__ __do_some_startup_code___;
-
-// Create a class that inherits from this class to write a test.
-class unit_test {
-public:
-  unit_test() {
-    srand(time(NULL));  // Seed number gen
+protected:
+  bool gen_chance(int numerator, int denominator) {
+    return rand() <= (((RAND_MAX)/denominator) * numerator);
   }
-private:
-  std::vector<std::pair<std::string, std::vector<std::string>>> headers;
 
   void create_header(std::string name, std::string field) {
     std::vector<std::string> emptyvec{};
