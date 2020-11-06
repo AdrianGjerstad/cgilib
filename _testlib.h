@@ -144,6 +144,89 @@ protected:
 
     return result;
   }
+  
+  // Begin setters for metavariables [rfc3875 section 4.1]
+
+  void set_auth_type(std::string type) {
+    setenv("AUTH_TYPE", type.c_str(), 1);
+  }
+
+  void set_content_length(int length) {
+    setenv("CONTENT_LENGTH", std::to_string(length).c_str(), 1);
+  }
+
+  void set_content_type(std::string type) {
+    setenv("CONTENT_TYPE", type.c_str(), 1);
+  }
+
+  void set_cgi_version(int major, int minor) {
+    setenv("GATEWAY_INTERFACE", (std::string("CGI/") + std::to_string(major) + "." + std::to_string(minor)).c_str(), 1);
+  }
+
+  void set_path_info(std::string info) {
+    setenv("PATH_INFO", info.c_str(), 1);
+  }
+
+  void set_translated_path(std::string path) {
+    setenv("PATH_TRANSLATED", path.c_str(), 1);
+  }
+
+  void set_query_string(std::string query) {
+    setenv("QUERY_STRING", query.c_str(), 1);
+  }
+
+  void set_client_address(std::string remote) {
+    setenv("REMOTE_ADDR", remote.c_str(), 1);
+  }
+
+  void set_client_name(std::string name) {
+    setenv("REMOTE_HOST", name.c_str(), 1);
+  }
+
+  void set_client_identity(std::string identity) {
+    setenv("REMOTE_IDENT", identity.c_str(), 1);
+  }
+
+  void set_user_string(std::string user) {
+    setenv("REMOTE_USER", user.c_str(), 1);
+  }
+
+  void set_request_method(std::string method) {
+    setenv("REQUEST_METHOD", method.c_str(), 1);
+  }
+
+  void set_script_name(std::string name) {
+    setenv("SCRIPT_NAME", name.c_str(), 1);
+  }
+
+  void set_address(std::string address) {
+    setenv("SERVER_NAME", address.c_str(), 1);
+  }
+
+  void set_port(int port) {
+    setenv("SERVER_PORT", std::to_string(port).c_str(), 1);
+  }
+
+  void use_http() {
+    set_port(80);
+  }
+
+  void use_https() {
+    set_port(443);
+  }
+
+  void set_http_version(int major, int minor) {
+    setenv("SERVER_PROTOCOL", (std::string("HTTP/") + std::to_string(major) + "." + std::to_string(minor)).c_str(), 1);
+  }
+
+  void set_server_software(std::string software) {
+    setenv("SERVER_SOFTWARE", software.c_str(), 1);
+  }
+
+  void set_request_body(std::string body) {
+    std::istringstream b(body);
+    std::cin.rdbuf(b.rdbuf());
+  }
 };
 
 void execute_test(unit_test& test) {
