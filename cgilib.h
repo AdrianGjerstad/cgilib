@@ -194,6 +194,10 @@ public:
     headers.erase(headers.begin()+idx);
   }
 
+  void clear() {
+    headers = {};
+  }
+
   std::string format() {
     std::string res;
     for(int i = 0; i < headers.size(); ++i) {
@@ -280,6 +284,11 @@ public:
     tmp = std::string("HTTP_") + tmp;
 
     return __getenv__(tmp.c_str());
+  }
+
+  void regenerate_list() {
+    list_generated = true;
+    generate_list();
   }
 
   std::vector<std::pair<std::string, std::string>> list() {
