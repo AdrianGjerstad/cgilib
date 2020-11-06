@@ -288,6 +288,7 @@ public:
 
   void regenerate_list() {
     list_generated = true;
+    headers = {};
     generate_list();
   }
 

@@ -47,14 +47,18 @@ public:
     }
   }
 
+  void print_request_headers() {
+    for(int i = 0; i < headers.size(); ++i) {
+      std::string name = headers[i].first;
+      for(int j = 0; j < headers[i].second.size(); ++j) {
+        std::cout << "\033[48;33m" << name << ": \033[48;31m" << headers[i].second[j] << "\033[0m" << std::endl;
+      }
+    }
+  }
+
   std::string get_name() {
     return name_;
   }
-
-  virtual int run() = 0;
-private:
-  std::string name_;
-  std::vector<std::pair<std::string, std::vector<std::string>>> headers;
 
   void clear_environment() {
     // SEE #15 TO UNDERSTAND THIS
@@ -65,6 +69,15 @@ private:
     }
   }
 
+  void clear_headers() {
+    headers = {};
+  }
+
+  virtual int run() = 0;
+  virtual void initialize() = 0;
+private:
+  std::string name_;
+  std::vector<std::pair<std::string, std::vector<std::string>>> headers;
 protected:
   bool gen_chance(int numerator, int denominator) {
     return rand() <= (((RAND_MAX)/denominator) * numerator);
@@ -143,9 +156,17 @@ void execute_test(unit_test& test) {
     std::cout << "\033[48;34;1m" << "Running test: " << test.get_name() << " (" << i+1 << " of " << trial_count << ")" << "\033[0m" << std::endl;
     
     ::cgi::headers.clear();
-    ::cgi::out.str(std::string());
+    ::cgi::out.str("");
+    test.clear_environment();
+    test.clear_headers();
+    test.initialize();
     test.build_environment();
     ::cgi::request_headers.regenerate_list();
+
+    std::cout << "\033[48;35;1m" << "Request headers given to script: " << "\033[0m" << std::endl;
+    test.print_request_headers();
+
+    std::cout << std::endl << "\033[48;34;1m" << "Script Output:" << "\033[0m" << std::endl;
 
     timeval tv;
     gettimeofday(&tv, 0);
