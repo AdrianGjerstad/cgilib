@@ -5,6 +5,8 @@
 ![platform-linux](https://img.shields.io/badge/platform-linux-blue?style=flat-square&logo=linux)
 ![std-c++17](https://img.shields.io/badge/std-c++17-blue?style=flat-square&logo=c%2b%2b)
 
+## Notice: this repository is no longer being maintained.
+
 CGILib is a C++ library built out of the sheer frustration of having to build all of that barebones code that you need to get information from the server. It is a single-header Common Gateway Interface Library meant to squeeze every ounce of data out of the environment and feed it to you when you want.
 
 ## Installation
